@@ -15,7 +15,7 @@ $items=$stmt->fetchAll();
 
 
       
-    <section class="banner" id="top" style="background-image: url(img/homepage-banner-image-1920x700.jpg);">
+    <section class="banner" id="top" style="background-image: url(img/b1.jpg);">
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
@@ -115,8 +115,9 @@ $items=$stmt->fetchAll();
                 </div>
             </div>
         </section>
-        <div class="text-center my-5" style="color: black"><a href="products.php" class="btn btn-outline-secondary btn-lg">View More Products</a></div><hr class="py-3">
-
+        <div class="blue-button text-center">
+            <a href="products.php">View More Products</a>
+        </div><br><br>
         
 <!-- -------------------------------------------------- -->
         <section id="video-container">

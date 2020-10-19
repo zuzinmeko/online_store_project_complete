@@ -96,9 +96,9 @@
                                 </li>
                                 <li class='active'>
                                   <a href="checkout.php" title="fa-shopping-cart" id="count" >
-                                    <i class="fa fa-shopping-cart" style="font-size:24px; color:  #FF9800;"></i>
+                                    <i class="fa fa-shopping-cart" style="font-size:24px; color:  #blue;"></i>
 
-                                    <span id="item_count" style="color: #FF9800;">0</span>
+                                    <span id="item_count" style="color: #blue;">0</span>
                                   </a>
 
 

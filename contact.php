@@ -56,9 +56,9 @@ include 'include/header.php';
                                         <div class="content"> 
                                             <p>Etiam viverra nibh at lorem hendrerit porta non nec ligula. Donec hendrerit porttitor pretium.</p>
                                             <ul>
-                                                <li><span>Phone:</span><a href="#">+1 333 4040 5566</a></li>
+                                                <li><span>Phone:</span><a href="#">09785520578</a></li>
                                                 <li><span>Email:</span><a href="#">contact@company.com</a></li>
-                                                <li><span>Address:</span><i class="fa fa-map-marker"></i> 212 Barrington Court New York</li>
+                                                <li><span>Address:</span><i class="fa fa-map-marker"></i>Hlaing Township,Yangon</li>
                                             </ul>
                                         </div>
                                     </div>

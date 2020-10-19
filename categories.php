@@ -12,7 +12,7 @@ $subcategories=$stmt->fetchAll();
 ?>
 
 
-<section class="banner banner-secondary" id="top" style="background-image: url(img/banner-image-1-1920x300.jpg);">
+<section class="banner banner-secondary" id="top" style="background-image: url(img/b3.jpg);">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
