@@ -1,118 +1,177 @@
-<?php 
-	session_start();
-  	if (isset($_SESSION['loginuser']) && $_SESSION['loginuser']['role_name']=="admin") {
-	include 'include/header.php';
+<?php  
+
+session_start();
+if (isset($_SESSION['loginuser']) && $_SESSION['loginuser']['role_name']=="admin") {
+
 	include 'dbconnect.php';
+	 include 'include/header.php';
+
 	$id=$_GET['id'];
 
-	$sql="SELECT item_order.*,items.*,users.name as user_name,orders.* FROM item_order INNER JOIN items ON items.id=item_order.item_id INNER JOIN orders ON orders.id=item_order.order_id INNER JOIN users ON users.id=orders.user_id WHERE item_order.order_id=:item_order_id";
 
-	$stmt=$pdo->prepare($sql);
-	$stmt->bindParam(":item_order_id",$id);
-	$stmt->execute();
-
-	$item_orders=$stmt->fetchAll();
-	//var_dump($item_orders);
 
 ?>
+
+
 <!-- Page Heading -->
-	 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-	 	<h1 class="h3 mb-0 text-gray-800">Order Detail Voucher</h1>
-	 	<a href="order_list.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-backward fa-sm text-white-50"></i>Go Back</a>
-	 </div>
-	 <div class="container py-5">
-	 	<div class="row">
-	 		<div class="offset-2 col-md-8">
-	 			<table class="table table-bordered">
-	 				<thead>
-
-	 					<tr>
-	 						<td colspan="10" rowspan="4" style="border-width: 4px">
-	 							<h3 class="text-center"><i class="fab fa-shopify"></i>Online Store</h3>
-	 							<h6 class="text-center"><i class="fas fa-home mr-1"></i>No(5) Hlaing Township, Yangon</h6>
-	 							<h6 class="text-center"><i class="fas fa-phone mr-1"></i>Tel:09785520579,0985632145</h6>
-	 							
-	 						</td>
-
-	 					</tr>
-	 				</thead>
-	 				<tbody>
-	 					<tr>
-	 						<td colspan="3" class="border-0">
-	 							<h6>User Name</h6>
-	 						</td>
-	 						<td colspan="2" class="border-0"><h6>: <?php echo $item_orders[0]['user_name'] ?></td></h6>
-	 						<td colspan="1" class="border-0"><h6>Date</td></h6>
-	 						<td colspan="1" class="border-0"><h6  class="text-center">:</td></h6>
-	 						<td colspan="3" class="border-0" ><h6 class="text-left"><?php echo $item_orders[0]['orderdate'] ?></td></h6>
-	 					</tr>
-	 					<tr>
-	 						<td colspan="3" class="border-0"><h6>Voucher</h6></td>
-	 						<td colspan="7" class="border-0"><h6>: <?php echo $item_orders[0]['voucherno'] ?></h6></td>
-	 					</tr>
-	 					<tr>
-	 						<td colspan="5" class=""><h6>Item Name</h6></td>
-	 						<td colspan="2" class=""><h6>Price</h6></td>
-	 						<td colspan="1" class=""><h6>Qty</h6></td>
-	 						<td colspan="2" class=""><h6>Amount</h6></td>
-	 					</tr>
-	 					<?php 
-
-	 					foreach ($item_orders as $item_order) {
-	 						$qty=$item_order['qty'];
-	 						$price=$item_order['price'];
-	 						$subtotal=$qty*$price;
-
-	 						$serviceAmt=1000;
-	 						$taxAmt=1100;
-	 						$discountAmt=0;
-	 						$netAmt=0;
-
-	 						$total=$item_orders[0]['total'];
-
-	 						$finalResult=$total+($serviceAmt+$taxAmt+$discountAmt+$netAmt);
+ <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Order Details</h1>
+    <a href="order_list.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-backward fa-sm text-white-50"></i> Go Back</a>
+    
+ </div>
 
 
-	 						?>
+  <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Order Details</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        
+                        <thead>
+                        	
+                        	<tr >
+                        		<h4 class="text-center"><i class="fab fa-shopify"></i>Online Store</h4>
+                        		<h6 class="text-center"><i class="fas fa-home mr-1"></i>Hlaing,Yangon</h6>
+                        		<p class="text-center"><i class="fas fa-phone mr-1"></i>Tel: 09 785520545</p>
 
-	 						<tr>
-	 							<td colspan="5"><?php echo $item_order['name'] ?></td>
-	 							<td colspan="2"><?php echo $item_order['price'] ?></td>
-	 							<td colspan="1" class="text-center"><?php echo $qty ?></td>
-	 							<td colspan="2" class="text-right"><?php echo $subtotal ?></td>
-	 						</tr>
-	 					<?php } ?>
-	 					<tr>
-	 						<td colspan="8" class="">Total Amount</td>
-	 						<td colspan="2" class="text-right " ><?php echo $item_orders[0]['total'] ?></td>
-	 					</tr>
-	 					<tr>
-	 						<td colspan="8" class="">Service Amount</td>
-	 						<td colspan="2" class="text-right" ><?php echo $serviceAmt ?></td>
-	 					</tr>
-	 					<tr>
-	 						<td colspan="8" class="">Discount Amount</td>
-	 						<td colspan="2" class="text-right" ><?php echo $discountAmt ?></td>
-	 					</tr>
-	 					<tr>
-	 						<td colspan="8" class="">Tax Amount</td>
-	 						<td colspan="2" class="text-right" ><?php echo $taxAmt ?></td>
-	 					</tr>
-	 					<tr>
-	 						<td colspan="8" class="">Net Amount</td>
-	 						<td colspan="2" class="text-right" ><?php echo $finalResult ?></td>
-	 					</tr>
+                        	</tr>
+              
 
-	 				</tbody>
-	 			</table>
-	 		</div>
-	 	</div>
-	 </div>
- 
+                              	   <?php  
+
+
+                        	   $sql="SELECT orders.*,users.name as user_name FROM orders INNER JOIN users ON orders.user_id=users.id WHERE orders.id=:id";
+                        	   $stmt=$pdo->prepare($sql);
+                        	   $stmt->bindParam(':id',$id);
+                        	   $stmt->execute();
+                        	   $orders=$stmt->fetchAll();
+                        	 
+                        	   $j=1;
+                        	   foreach ($orders as $order) {
+
+                        	   	?>
+
+        						<tr>
+        							
+                                    <td colspan="2"><b>Customer Name</b></td>                             
+                                    <td><?=$order['user_name']?></td>
+
+	                                <td colspan="1"><b>Date </b></td>
+	                                <td><?=$order['orderdate']?></td>
+
+                                </tr>
+                                <tr>
+                                	<td colspan="2"><b>Voucher No</b> </td>                             
+                                    <td><?=$order['voucherno']?></td>
+
+                                    <td colspan="1"><b>Order Time </b></td>
+	                                <td><?=$order['orderdate']?></td>
+
+                                </tr>
+
+                                <?php  
+                            }   
+                            ?>
+
+                 
+                            <tr>
+                                <th>#</th>
+                                <th>Item Name</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Amount</th>
+                               
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                            
+
+
+                              	   <?php  
+
+
+                        	   $sql="SELECT orders.*,users.name as user_name FROM orders INNER JOIN users ON orders.user_id=users.id WHERE orders.id=:id";
+                        	   $stmt=$pdo->prepare($sql);
+                        	   $stmt->bindParam(':id',$id);
+                        	   $stmt->execute();
+                        	   $orders=$stmt->fetchAll();
+                        	 
+                        	   $j=1;
+                        	   foreach ($orders as $order) {
+
+                        	   	?>
+
+        						<tr>
+        							
+                                  
+                                      <td colspan="4">Toal Amount</td>                           
+                                    <td><?=$order['total']?></td>
+
+
+                                </tr>
+                               
+                                <?php  
+                            }   
+                            ?>
+                                                  
+                            </tr>
+                        </tfoot>
+                        <tbody>
+
+
+                      <?php  
+
+                            $num=1;
+                            $sql="SELECT item_order.*, items.name as item_name,items.discount as price  FROM item_order INNER JOIN items ON item_order.item_id=items.id WHERE item_order.order_id=:id";
+                                $stmt=$pdo->prepare($sql);
+                                $stmt->bindParam(':id',$id);
+                                $stmt->execute();
+                                $orderdetails= $stmt->fetchAll();
+
+    
+
+                            $j=1;
+                            foreach ($orderdetails as $orderdetail) {
+                            	$price=$orderdetail['price'];
+                            	$qty=$orderdetail['qty'];
+                            	$amount=$price*$qty;
+                                ?>
+
+                                <tr>
+                                    <td><?php echo $j++; ?></td>
+                                    <td><?=$orderdetail['item_name']?></td>
+                                    <td><?=$orderdetail['price']?></td>
+                                    <td><?=$orderdetail['qty']?></td>
+                                    <td>  <?=$amount?>     </td>                           	
+                                    
+
+                                    
+                                   
+
+
+                                </tr>
+
+                                <?php  
+                            }   
+                            ?>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
 
  <?php 
- 	include 'include/footer.php';
- 	}else{
-  header("location:../index.php");
-}
+    include 'include/footer.php';
+         }else{
+            header("location:../index.php");
+         }
   ?>

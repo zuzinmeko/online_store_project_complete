@@ -56,7 +56,7 @@
     </footer>
 
     <div class="sub-footer">
-        <p>Copyright © 2020 Online Store<a href="https://www.phpjabbers.com/">ShoppingWebsite.com</a></p>
+        <p>Copyright © 2020 Online Store<a href="#">zuonlinestore@company.com</a></p>
     </div>
 
 
